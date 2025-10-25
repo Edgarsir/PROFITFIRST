@@ -1,0 +1,1 @@
+export { GetPaid } from "./GetPaid";

@@ -1,0 +1,1 @@
+export { HowItWorksIn } from "./HowItWorksIn";
