@@ -12,7 +12,7 @@ export const HowItWorksSection = (): JSX.Element => {
       <div className="absolute top-0 right-0 w-[344.54px] 3xl:w-[460px] 4xl:w-[600px] 5xl:w-[800px] h-[332px] 3xl:h-[443px] 4xl:h-[580px] 5xl:h-[770px] bg-[#2d4022] rounded-[172.27px/166px] blur-[100px] -mr-20" />
 
       {/* Content Container */}
-      <div className="container mx-auto px-4 md:px-6 lg:px-8 relative">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8 xl:px-12 relative">
         {/* Title */}
         <header className="mb-12 md:mb-16 lg:mb-20 3xl:mb-24 4xl:mb-32 5xl:mb-40">
           <h2 className="[font-family:'Inter',Helvetica] font-normal text-white text-2xl md:text-[28px] 3xl:text-[37px] 4xl:text-[48px] 5xl:text-[64px] text-center tracking-[0] leading-tight md:leading-[36px] 3xl:leading-[48px] 4xl:leading-[60px] 5xl:leading-[80px]">
@@ -23,22 +23,20 @@ export const HowItWorksSection = (): JSX.Element => {
           </h2>
         </header>
 
-        {/* Steps Container - Mobile: Stack vertically, Desktop: Absolute positioning */}
-        <div className="hidden xl:block relative w-full h-[1200px] 3xl:h-[1600px] 4xl:h-[2100px] 5xl:h-[2800px]">
-          {/* Step 1: Sign Up */}
-          <SignUpSection />
+        {/* Steps Container - Desktop: Grid layout with equal spacing */}
+        <div className="hidden xl:flex xl:flex-col xl:gap-8 3xl:gap-10 4xl:gap-12 5xl:gap-16">
+          {/* Row 1: Steps 1, 2, 3 */}
+          <div className="flex justify-between gap-8 3xl:gap-10 4xl:gap-12 5xl:gap-16">
+            <SignUpSection />
+            <ShareCard />
+            <RefferalSection />
+          </div>
 
-          {/* Step 2: Share */}
-          <ShareCard />
-
-          {/* Step 3: Referral Signs Up */}
-          <RefferalSection />
-
-          {/* Step 4: They See Results */}
-          <ResultCard />
-
-          {/* Step 5: You Get Paid */}
-          <GetPaid />
+          {/* Row 2: Steps 4, 5 - Centered with same gap */}
+          <div className="flex justify-center gap-8 3xl:gap-10 4xl:gap-12 5xl:gap-16">
+            <ResultCard />
+            <GetPaid />
+          </div>
         </div>
 
         {/* Mobile/Tablet Layout - Stacked */}

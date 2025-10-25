@@ -1,6 +1,6 @@
 export const ResultCard = (): JSX.Element => {
   return (
-    <div className="w-full max-w-[360px] 3xl:max-w-[420px] items-start xl:items-end gap-[40px] 3xl:gap-[47px] xl:absolute xl:top-[650px] 3xl:xl:top-[867px] xl:left-[270px] 3xl:xl:left-[327px] flex flex-col">
+    <div className="w-full max-w-[360px] 3xl:max-w-[420px] items-start gap-[40px] 3xl:gap-[47px] flex flex-col">
       <div className="relative self-stretch w-full h-[340px] 3xl:h-[397px] bg-[#1e1e1e] rounded-[12px] 3xl:rounded-[14px] flex flex-col items-center justify-center p-6 3xl:p-7">
         <div className="w-full h-full bg-gradient-to-br from-[#13ef96] to-green-400 rounded-xl 3xl:rounded-2xl flex flex-col items-center justify-center">
           <svg className="w-12 h-12 3xl:w-16 3xl:h-16 text-black mb-3 3xl:mb-4" fill="currentColor" viewBox="0 0 20 20">

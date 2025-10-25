@@ -1,6 +1,6 @@
 export const ShareCard = (): JSX.Element => {
   return (
-    <div className="w-full max-w-[360px] 3xl:max-w-[420px] 4xl:max-w-[550px] 5xl:max-w-[730px] gap-10 3xl:gap-[47px] 4xl:gap-[62px] 5xl:gap-[82px] xl:absolute xl:top-[150px] 3xl:xl:top-[200px] 4xl:xl:top-[260px] 5xl:xl:top-[350px] xl:left-[460px] 3xl:xl:left-[547px] 4xl:xl:left-[715px] 5xl:xl:left-[950px] flex flex-col items-start">
+    <div className="w-full max-w-[360px] 3xl:max-w-[420px] 4xl:max-w-[550px] 5xl:max-w-[730px] gap-10 3xl:gap-[47px] 4xl:gap-[62px] 5xl:gap-[82px] flex flex-col items-start">
       <div className="relative self-stretch w-full h-[340px] 3xl:h-[397px] 4xl:h-[520px] 5xl:h-[690px]">
         <div className="absolute top-0.5 left-0 w-[360px] 3xl:w-[420px] 4xl:w-[550px] 5xl:w-[730px] h-[338px] 3xl:h-[395px] 4xl:h-[517px] 5xl:h-[687px] bg-[#1e1e1e] rounded-[12px] 3xl:rounded-[14px] 4xl:rounded-[18px] 5xl:rounded-[24px]" />
         <div className="inline-flex flex-col items-center gap-2 3xl:gap-3 4xl:gap-4 5xl:gap-5 absolute top-[25px] 3xl:top-[30px] 4xl:top-[39px] 5xl:top-[52px] left-[180px] 3xl:left-[210px] 4xl:left-[275px] 5xl:left-[365px]">

@@ -1,6 +1,6 @@
 export const SignUpSection = (): JSX.Element => {
   return (
-    <div className="flex flex-col w-full max-w-[360px] 3xl:max-w-[420px] 4xl:max-w-[550px] 5xl:max-w-[730px] items-start gap-[40px] 3xl:gap-[47px] 4xl:gap-[62px] 5xl:gap-[82px] xl:absolute xl:top-[150px] 3xl:xl:top-[200px] 4xl:xl:top-[260px] 5xl:xl:top-[350px] xl:left-[80px] 3xl:xl:left-[107px] 4xl:xl:left-[140px] 5xl:xl:left-[185px]">
+    <div className="flex flex-col w-full max-w-[360px] 3xl:max-w-[420px] 4xl:max-w-[550px] 5xl:max-w-[730px] items-start gap-[40px] 3xl:gap-[47px] 4xl:gap-[62px] 5xl:gap-[82px]">
       <div className="relative self-stretch w-full h-[340px] 3xl:h-[397px] 4xl:h-[520px] 5xl:h-[690px]">
         <div className="absolute top-px left-[3px] w-[357px] 3xl:w-[417px] 4xl:w-[547px] 5xl:w-[727px] h-[340px] 3xl:h-[397px] 4xl:h-[520px] 5xl:h-[690px] bg-[#1e1e1e] rounded-[12px] 3xl:rounded-[14px] 4xl:rounded-[18px] 5xl:rounded-[24px]" />
         <div className="absolute top-5 3xl:top-7 4xl:top-9 5xl:top-12 left-[20px] 3xl:left-[27px] 4xl:left-[35px] 5xl:left-[47px] [font-family:'Inter',Helvetica] font-semibold text-white text-[20px] 3xl:text-[27px] 4xl:text-[35px] 5xl:text-[47px] text-center tracking-[0] leading-[26px] 3xl:leading-[35px] 4xl:leading-[46px] 5xl:leading-[61px] whitespace-nowrap">

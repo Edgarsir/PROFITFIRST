@@ -1,6 +1,6 @@
 export const GetPaid = (): JSX.Element => {
   return (
-    <div className="flex flex-col w-full max-w-[360px] 3xl:max-w-[420px] items-start gap-12 3xl:gap-14 xl:absolute xl:top-[650px] 3xl:xl:top-[867px] xl:left-[650px] 3xl:xl:left-[767px]">
+    <div className="flex flex-col w-full max-w-[360px] 3xl:max-w-[420px] items-start gap-12 3xl:gap-14">
       <div className="relative w-[360px] 3xl:w-[420px] h-[340px] 3xl:h-[397px] bg-[#1e1e1e] rounded-[20px] 3xl:rounded-[23px]">
         <div className="absolute top-[70px] 3xl:top-[85px] left-6 3xl:left-7 w-[300px] 3xl:w-[355px] h-[42px] 3xl:h-[50px] flex bg-[#d9d9d9] rounded 3xl:rounded-lg">
           <div className="mt-[11px] 3xl:mt-[13px] w-[50px] 3xl:w-[60px] h-5 3xl:h-6 ml-6 3xl:ml-7 [font-family:'Poppins',Helvetica] font-normal text-black text-sm 3xl:text-[17px] tracking-[-0.09px] leading-[18px] 3xl:leading-[22px] whitespace-nowrap">
