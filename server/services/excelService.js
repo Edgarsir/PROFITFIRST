@@ -29,7 +29,7 @@ class ExcelService {
         'Timestamp', 
         'Full Name', 
         'Email', 
-        'Phone Number', 
+        'Unique ID', 
         'Password Hash', 
         'Status',
         'Registration IP',
@@ -57,7 +57,7 @@ class ExcelService {
         { width: 20 }, // Timestamp
         { width: 25 }, // Full Name
         { width: 30 }, // Email
-        { width: 15 }, // Phone Number
+        { width: 20 }, // Unique ID
         { width: 20 }, // Password Hash
         { width: 12 }, // Status
         { width: 15 }, // Registration IP
@@ -70,7 +70,7 @@ class ExcelService {
   }
 
   // Append a new user signup to the workbook
-  async addUser({ name, email, phone, passwordHash, ip = 'Unknown' }) {
+  async addUser({ name, email, uniqueId, passwordHash, ip = 'Unknown' }) {
     try {
       await this.ensureWorkbook();
       
@@ -87,7 +87,7 @@ class ExcelService {
         new Date().toISOString(),
         name,
         email,
-        phone || 'Not provided',
+        uniqueId,
         passwordHash,
         'Active',
         ip,
@@ -179,6 +179,36 @@ class ExcelService {
     }
   }
 
+  // Check if unique ID exists
+  async uniqueIdExists(uniqueId) {
+    try {
+      if (!fs.existsSync(EXCEL_PATH)) {
+        return false;
+      }
+
+      const wb = new ExcelJS.Workbook();
+      await wb.xlsx.readFile(EXCEL_PATH);
+      
+      const ws = wb.getWorksheet('User Signups');
+      if (!ws) return false;
+
+      let exists = false;
+      ws.eachRow((row, rowNumber) => {
+        if (rowNumber > 1) { // Skip header row
+          const rowUniqueId = row.getCell(4).value; // Unique ID is in column 4
+          if (rowUniqueId === uniqueId) {
+            exists = true;
+          }
+        }
+      });
+
+      return exists;
+    } catch (error) {
+      console.error('❌ Error checking unique ID existence:', error);
+      return false;
+    }
+  }
+
   // Get user data by email
   async getUserByEmail(email) {
     try {
@@ -201,7 +231,7 @@ class ExcelService {
               timestamp: row.getCell(1).value,
               name: row.getCell(2).value,
               email: row.getCell(3).value,
-              phone: row.getCell(4).value,
+              uniqueId: row.getCell(4).value,
               passwordHash: row.getCell(5).value,
               status: row.getCell(6).value,
               registrationIP: row.getCell(7).value,
@@ -242,7 +272,7 @@ class ExcelService {
           const user = {
             name: row.getCell(2).value,
             email: row.getCell(3).value,
-            number: row.getCell(4).value,
+            uniqueId: row.getCell(4).value,
             password: row.getCell(5).value // This is the password hash
           };
           users.push(user);

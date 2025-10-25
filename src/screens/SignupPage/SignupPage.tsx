@@ -6,17 +6,15 @@ import { fadeSlideUp, hoverGlow } from '../../utils/animations';
 interface FormData {
   name: string;
   email: string;
-  phone: string;
+  uniqueId: string;
   password: string;
-  confirmPassword: string;
 }
 
 interface FormErrors {
   name?: string;
   email?: string;
-  phone?: string;
+  uniqueId?: string;
   password?: string;
-  confirmPassword?: string;
   general?: string;
 }
 
@@ -25,9 +23,8 @@ export const SignupPage = (): JSX.Element => {
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
-    phone: '',
-    password: '',
-    confirmPassword: ''
+    uniqueId: '',
+    password: ''
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
@@ -52,9 +49,13 @@ export const SignupPage = (): JSX.Element => {
       newErrors.email = 'Please enter a valid email address';
     }
 
-    // Phone validation (Indian format) - optional
-    if (formData.phone && !/^[6-9]\d{9}$/.test(formData.phone.replace(/\s+/g, ''))) {
-      newErrors.phone = 'Please enter a valid 10-digit Indian mobile number';
+    // Unique ID validation
+    if (!formData.uniqueId.trim()) {
+      newErrors.uniqueId = 'Unique ID is required';
+    } else if (formData.uniqueId.trim().length < 3) {
+      newErrors.uniqueId = 'Unique ID must be at least 3 characters';
+    } else if (!/^[a-zA-Z0-9_-]+$/.test(formData.uniqueId.trim())) {
+      newErrors.uniqueId = 'Unique ID can only contain letters, numbers, hyphens, and underscores';
     }
 
     // Password validation
@@ -62,13 +63,6 @@ export const SignupPage = (): JSX.Element => {
       newErrors.password = 'Password is required';
     } else if (formData.password.length < 6) {
       newErrors.password = 'Password must be at least 6 characters';
-    }
-
-    // Confirm password validation
-    if (!formData.confirmPassword) {
-      newErrors.confirmPassword = 'Please confirm your password';
-    } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
     }
 
     setErrors(newErrors);
@@ -113,7 +107,7 @@ export const SignupPage = (): JSX.Element => {
         body: JSON.stringify({
           name: formData.name.trim(),
           email: formData.email.trim().toLowerCase(),
-          phone: formData.phone.trim() || undefined,
+          uniqueId: formData.uniqueId.trim(),
           password: formData.password
         }),
       });
@@ -255,27 +249,27 @@ export const SignupPage = (): JSX.Element => {
             {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
           </div>
 
-          {/* Phone Number */}
+          {/* Unique ID */}
           <div className="mb-6">
-            <label htmlFor="phone" className="block text-white text-sm font-medium mb-2">
-              Phone Number (Optional)
+            <label htmlFor="uniqueId" className="block text-white text-sm font-medium mb-2">
+              Unique ID *
             </label>
             <input
-              type="tel"
-              id="phone"
-              name="phone"
-              value={formData.phone}
+              type="text"
+              id="uniqueId"
+              name="uniqueId"
+              value={formData.uniqueId}
               onChange={handleChange}
               className={`w-full px-4 py-3 bg-[#4c454533] border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#13ef96] transition-all ${
-                errors.phone ? 'border-red-500' : 'border-[#ffffff8a]'
+                errors.uniqueId ? 'border-red-500' : 'border-[#ffffff8a]'
               }`}
-              placeholder="Enter your 10-digit mobile number"
+              placeholder="Enter your unique ID"
             />
-            {errors.phone && <p className="text-red-400 text-sm mt-1">{errors.phone}</p>}
+            {errors.uniqueId && <p className="text-red-400 text-sm mt-1">{errors.uniqueId}</p>}
           </div>
 
           {/* Password */}
-          <div className="mb-6">
+          <div className="mb-8">
             <label htmlFor="password" className="block text-white text-sm font-medium mb-2">
               Password *
             </label>
@@ -291,25 +285,6 @@ export const SignupPage = (): JSX.Element => {
               placeholder="Create a strong password"
             />
             {errors.password && <p className="text-red-400 text-sm mt-1">{errors.password}</p>}
-          </div>
-
-          {/* Confirm Password */}
-          <div className="mb-8">
-            <label htmlFor="confirmPassword" className="block text-white text-sm font-medium mb-2">
-              Confirm Password *
-            </label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              className={`w-full px-4 py-3 bg-[#4c454533] border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#13ef96] transition-all ${
-                errors.confirmPassword ? 'border-red-500' : 'border-[#ffffff8a]'
-              }`}
-              placeholder="Confirm your password"
-            />
-            {errors.confirmPassword && <p className="text-red-400 text-sm mt-1">{errors.confirmPassword}</p>}
           </div>
 
           {/* Submit Button */}

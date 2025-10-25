@@ -1,7 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { LandingPage, SignupPage, LoginPage, Dashboard } from "./src/screens";
+import { LandingPage, SignupPage, LoginPage, Dashboard, AdminPage } from "./src/screens";
 import { ErrorBoundary } from "./src/components/ErrorBoundary";
 import "./styles/tailwind.css";
 
@@ -24,6 +24,7 @@ createRoot(document.getElementById("app") as HTMLElement).render(
               <Dashboard />
             </ProtectedRoute>
           } />
+          <Route path="/admin" element={<AdminPage />} />
         </Routes>
       </Router>
     </ErrorBoundary>

@@ -12,7 +12,7 @@ const generateToken = (user) => {
     { 
       email: user.email, 
       name: user.name,
-      phone: user.phone 
+      uniqueId: user.uniqueId 
     },
     jwtSecret,
     { expiresIn: jwtExpire }
@@ -24,13 +24,13 @@ const generateToken = (user) => {
 // @access  Public
 exports.signup = async (req, res) => {
   try {
-    const { name, email, phone, password } = req.body;
+    const { name, email, uniqueId, password } = req.body;
 
     // Validation
-    if (!name || !email || !password) {
+    if (!name || !email || !uniqueId || !password) {
       return res.status(400).json({
         success: false,
-        message: 'Please provide name, email, and password'
+        message: 'Please provide name, email, unique ID, and password'
       });
     }
 
@@ -42,11 +42,27 @@ exports.signup = async (req, res) => {
       });
     }
 
-    // Validate phone number (Indian format)
-    if (phone && !validator.isMobilePhone(phone, 'en-IN')) {
+    // Validate unique ID
+    if (uniqueId.trim().length < 3) {
       return res.status(400).json({
         success: false,
-        message: 'Please provide a valid Indian phone number'
+        message: 'Unique ID must be at least 3 characters long'
+      });
+    }
+
+    if (!/^[a-zA-Z0-9_-]+$/.test(uniqueId.trim())) {
+      return res.status(400).json({
+        success: false,
+        message: 'Unique ID can only contain letters, numbers, hyphens, and underscores'
+      });
+    }
+
+    // Check if unique ID already exists
+    const uniqueIdExists = await excelService.uniqueIdExists(uniqueId.trim());
+    if (uniqueIdExists) {
+      return res.status(400).json({
+        success: false,
+        message: 'This Unique ID is already taken'
       });
     }
 
@@ -78,7 +94,7 @@ exports.signup = async (req, res) => {
     await excelService.addUser({
       name: name.trim(),
       email: email.toLowerCase().trim(),
-      phone: phone ? phone.trim() : null,
+      uniqueId: uniqueId.trim(),
       passwordHash,
       ip: clientIP
     });
@@ -87,7 +103,7 @@ exports.signup = async (req, res) => {
     const token = generateToken({
       email: email.toLowerCase().trim(),
       name: name.trim(),
-      phone: phone ? phone.trim() : null
+      uniqueId: uniqueId.trim()
     });
 
     res.status(201).json({
@@ -97,7 +113,7 @@ exports.signup = async (req, res) => {
       user: {
         name: name.trim(),
         email: email.toLowerCase().trim(),
-        phone: phone ? phone.trim() : null
+        uniqueId: uniqueId.trim()
       }
     });
 

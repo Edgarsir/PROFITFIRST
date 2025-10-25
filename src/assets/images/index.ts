@@ -1,13 +1,13 @@
 // ES6 Image Exports - Using Original Project Images
 
 // User Personas Images - Using actual project images
-export const contentCreator = "/src/assets/images/6 Skills You Need to Become a Successful Online Content Creator _ Entrepreneur 1-3.png";
-export const agencyOwner = "/src/assets/images/6 Skills You Need to Become a Successful Online Content Creator _ Entrepreneur 1-1.png";
-export const digitalMarketer = "/src/assets/images/6 Skills You Need to Become a Successful Online Content Creator _ Entrepreneur 1-2.png";
-export const freelancer = "/src/assets/images/How to Become a Virtual Assistant (With No Experience).jpg";
+export const contentCreator = "/images/content-creator.png";
+export const agencyOwner = "/images/agency-owner.png";
+export const digitalMarketer = "/images/digital-marketer.png";
+export const freelancer = "/images/freelancer.png";
 
 // Key Benefits Images - Using actual project images
-export const keyBenefitsMain = "/src/assets/images/94154ef7dd35ec02829a8a2d351bfa09af23de91.png";
+export const keyBenefitsMain = "/images/key-benefits-main.png";
 export const benefitIcon1 = "https://c.animaapp.com/mgrn477pA528g8/img/vector.svg";
 export const benefitIcon2 = "https://c.animaapp.com/mgrn477pA528g8/img/vector-1.svg";
 
