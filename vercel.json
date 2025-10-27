@@ -6,6 +6,10 @@
   "framework": "vite",
   "rewrites": [
     {
+      "source": "/api/signup",
+      "destination": "/api/signup.js"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
