@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const validator = require('validator');
-const excelService = require('../services/excelService');
+const firebaseService = require('../services/firebaseService');
 
 // Generate JWT token
 const generateToken = (user) => {
@@ -58,7 +58,7 @@ exports.signup = async (req, res) => {
     }
 
     // Check if unique ID already exists
-    const uniqueIdExists = await excelService.uniqueIdExists(uniqueId.trim());
+    const uniqueIdExists = await firebaseService.uniqueIdExists(uniqueId.trim());
     if (uniqueIdExists) {
       return res.status(400).json({
         success: false,
@@ -75,7 +75,7 @@ exports.signup = async (req, res) => {
     }
 
     // Check if user already exists
-    const userExists = await excelService.userExists(email);
+    const userExists = await firebaseService.userExists(email);
     if (userExists) {
       return res.status(400).json({
         success: false,
@@ -90,8 +90,8 @@ exports.signup = async (req, res) => {
     // Get client IP
     const clientIP = req.ip || req.connection.remoteAddress || 'Unknown';
 
-    // Add user to Excel
-    await excelService.addUser({
+    // Add user to Firebase
+    await firebaseService.addUser({
       name: name.trim(),
       email: email.toLowerCase().trim(),
       uniqueId: uniqueId.trim(),
@@ -149,8 +149,8 @@ exports.login = async (req, res) => {
       });
     }
 
-    // Get user from Excel
-    const user = await excelService.getUserByEmail(email.toLowerCase().trim());
+    // Get user from Firebase
+    const user = await firebaseService.getUserByEmail(email.toLowerCase().trim());
     if (!user) {
       return res.status(401).json({
         success: false,
@@ -168,7 +168,7 @@ exports.login = async (req, res) => {
     }
 
     // Update last login
-    await excelService.updateLastLogin(email.toLowerCase().trim());
+    await firebaseService.updateLastLogin(email.toLowerCase().trim());
 
     // Generate token
     const token = generateToken({
@@ -203,7 +203,7 @@ exports.login = async (req, res) => {
 // @access  Private
 exports.getProfile = async (req, res) => {
   try {
-    const user = await excelService.getUserByEmail(req.user.email);
+    const user = await firebaseService.getUserByEmail(req.user.email);
     
     if (!user) {
       return res.status(404).json({
@@ -233,34 +233,32 @@ exports.getProfile = async (req, res) => {
   }
 };
 
-// @desc    Download Excel file (Admin only)
+// @desc    Download data as JSON (Admin only)
 // @route   GET /api/auth/download-excel
 // @access  Private (Admin)
 exports.downloadExcel = async (req, res) => {
   try {
-    const filePath = excelService.getExcelFilePath();
+    const data = await firebaseService.exportData();
     
-    // Check if file exists
-    const fs = require('fs');
-    if (!fs.existsSync(filePath)) {
+    if (data.length === 0) {
       return res.status(404).json({
         success: false,
         message: 'No signup data available yet'
       });
     }
 
-    // Set headers for file download
-    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    res.setHeader('Content-Disposition', `attachment; filename="profitfirst-signups-${new Date().toISOString().split('T')[0]}.xlsx"`);
+    // Set headers for JSON download
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Content-Disposition', `attachment; filename="profitfirst-signups-${new Date().toISOString().split('T')[0]}.json"`);
     
-    // Send file
-    res.download(filePath, `profitfirst-signups-${new Date().toISOString().split('T')[0]}.xlsx`);
+    // Send data as JSON
+    res.json(data);
 
   } catch (error) {
     console.error('Download error:', error);
     res.status(500).json({
       success: false,
-      message: 'Error downloading Excel file'
+      message: 'Error downloading data'
     });
   }
 };
@@ -270,7 +268,7 @@ exports.downloadExcel = async (req, res) => {
 // @access  Private (Admin)
 exports.getStats = async (req, res) => {
   try {
-    const stats = await excelService.getUserStats();
+    const stats = await firebaseService.getUserStats();
     
     res.json({
       success: true,
@@ -295,7 +293,7 @@ exports.getStats = async (req, res) => {
 // @access  Private (Admin)
 exports.getUsersBasicInfo = async (req, res) => {
   try {
-    const users = await excelService.getAllUsersBasicInfo();
+    const users = await firebaseService.getAllUsersBasicInfo();
     
     res.json({
       success: true,

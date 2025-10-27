@@ -27,9 +27,11 @@ app.use(cors({
 
 // Import routes
 const simpleSignupRoutes = require('./routes/simpleSignup');
+const adminRoutes = require('./routes/admin');
 
 // Use routes
 app.use('/api/signup', simpleSignupRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

@@ -2,10 +2,13 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 interface UserData {
+  timestamp: string;
   name: string;
   email: string;
   uniqueId: string;
   password: string;
+  ip: string;
+  status: string;
 }
 
 export const AdminPage = (): JSX.Element => {
@@ -17,12 +20,12 @@ export const AdminPage = (): JSX.Element => {
     setIsLoading(true);
     setError('');
     try {
-      const apiUrl = `${(import.meta as any).env.VITE_API_URL}/auth/users-basic`;
+      const apiUrl = `${(import.meta as any).env.VITE_API_URL}/admin/signups`;
       const response = await fetch(apiUrl);
       const data = await response.json();
 
       if (data.success) {
-        setUsers(data.users);
+        setUsers(data.data);
       } else {
         setError(data.message || 'Failed to fetch users');
       }
@@ -35,7 +38,7 @@ export const AdminPage = (): JSX.Element => {
   };
 
   const downloadExcel = () => {
-    const apiUrl = `${(import.meta as any).env.VITE_API_URL}/auth/download-excel`;
+    const apiUrl = `${(import.meta as any).env.VITE_API_URL}/admin/download-excel`;
     window.open(apiUrl, '_blank');
   };
 
@@ -94,20 +97,22 @@ export const AdminPage = (): JSX.Element => {
         {/* Users Table */}
         <div className="bg-[#1e1e1e] rounded-xl border border-[#13ef96]/20 overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full">
+            <table className="w-full min-w-[1000px]">
               <thead className="bg-[#13ef96]">
                 <tr>
-                  <th className="px-6 py-4 text-left text-sm font-bold text-black">#</th>
-                  <th className="px-6 py-4 text-left text-sm font-bold text-black">Name</th>
-                  <th className="px-6 py-4 text-left text-sm font-bold text-black">Email</th>
-                  <th className="px-6 py-4 text-left text-sm font-bold text-black">Unique ID</th>
-                  <th className="px-6 py-4 text-left text-sm font-bold text-black">Password Hash</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-black whitespace-nowrap">#</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-black whitespace-nowrap">Timestamp</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-black whitespace-nowrap">Name</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-black whitespace-nowrap">Email</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-black whitespace-nowrap">Unique ID</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-black whitespace-nowrap">Password</th>
+                  <th className="px-4 py-3 text-left text-xs font-bold text-black whitespace-nowrap">Status</th>
                 </tr>
               </thead>
               <tbody>
                 {isLoading ? (
                   <tr>
-                    <td colSpan={5} className="px-6 py-12 text-center">
+                    <td colSpan={7} className="px-6 py-12 text-center">
                       <div className="flex items-center justify-center gap-2">
                         <div className="w-6 h-6 border-2 border-[#13ef96] border-t-transparent rounded-full animate-spin" />
                         <span className="text-gray-400">Loading users...</span>
@@ -116,7 +121,7 @@ export const AdminPage = (): JSX.Element => {
                   </tr>
                 ) : users.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="px-6 py-12 text-center text-gray-400">
+                    <td colSpan={7} className="px-6 py-12 text-center text-gray-400">
                       No users found. Start by creating some signups!
                     </td>
                   </tr>
@@ -126,18 +131,33 @@ export const AdminPage = (): JSX.Element => {
                       key={index}
                       className="border-t border-[#ffffff1a] hover:bg-[#2a2a2a] transition-colors"
                     >
-                      <td className="px-6 py-4 text-gray-300">{index + 1}</td>
-                      <td className="px-6 py-4 text-white font-medium">{user.name}</td>
-                      <td className="px-6 py-4 text-gray-300">{user.email}</td>
-                      <td className="px-6 py-4 text-[#13ef96] font-mono">{user.uniqueId}</td>
-                      <td className="px-6 py-4 text-gray-500 font-mono text-xs truncate max-w-xs">
-                        {user.password}
+                      <td className="px-4 py-3 text-gray-300 text-sm">{index + 1}</td>
+                      <td className="px-4 py-3 text-gray-400 text-xs whitespace-nowrap">
+                        {new Date(user.timestamp).toLocaleString('en-US', {
+                          month: 'short',
+                          day: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit'
+                        })}
+                      </td>
+                      <td className="px-4 py-3 text-white font-medium text-sm">{user.name}</td>
+                      <td className="px-4 py-3 text-gray-300 text-sm">{user.email}</td>
+                      <td className="px-4 py-3 text-[#13ef96] font-mono text-sm">{user.uniqueId}</td>
+                      <td className="px-4 py-3 text-gray-400 font-mono text-xs">{user.password}</td>
+                      <td className="px-4 py-3">
+                        <span className="px-2 py-1 bg-[#13ef96]/20 text-[#13ef96] rounded-full text-xs font-medium whitespace-nowrap">
+                          {user.status}
+                        </span>
                       </td>
                     </tr>
                   ))
                 )}
               </tbody>
             </table>
+          </div>
+          {/* Scroll hint for small screens */}
+          <div className="lg:hidden px-4 py-2 bg-[#2a2a2a] border-t border-[#ffffff1a] text-center">
+            <p className="text-gray-400 text-xs">← Scroll horizontally to see all columns →</p>
           </div>
         </div>
 

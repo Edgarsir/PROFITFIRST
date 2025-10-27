@@ -96,7 +96,7 @@ export const SignupPage = (): JSX.Element => {
     setErrors({});
 
     try {
-      const apiUrl = `${(import.meta as any).env.VITE_API_URL}/auth/signup`;
+      const apiUrl = `${(import.meta as any).env.VITE_API_URL}/signup`;
       console.log('Attempting to call API:', apiUrl);
       
       const response = await fetch(apiUrl, {
@@ -116,13 +116,12 @@ export const SignupPage = (): JSX.Element => {
 
       if (data.success) {
         setIsSuccess(true);
-        // Store token
-        localStorage.setItem('token', data.token);
+        // Store user info
         localStorage.setItem('user', JSON.stringify(data.user));
         
-        // Redirect to dashboard after 2 seconds
+        // Redirect to home after 2 seconds
         setTimeout(() => {
-          navigate('/dashboard');
+          navigate('/');
         }, 2000);
       } else {
         setErrors({ general: data.message || 'Registration failed. Please try again.' });
@@ -150,9 +149,9 @@ export const SignupPage = (): JSX.Element => {
                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold text-white mb-4">Welcome to ProfitFirst!</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">Thank You for Joining!</h2>
             <p className="text-gray-300 mb-6">
-              Your account has been created successfully. You're being redirected to your dashboard...
+              Your registration has been received. We'll contact you soon with your affiliate details!
             </p>
             <div className="w-full bg-[#2a2a2a] rounded-full h-2">
               <motion.div
@@ -193,7 +192,7 @@ export const SignupPage = (): JSX.Element => {
             <h1 className="text-3xl font-bold text-white">ProfitFirst</h1>
           </div>
           <h2 className="text-2xl font-bold text-white mb-2">Join Our Affiliate Program</h2>
-          <p className="text-gray-300">Start earning ₹1,00,000+ every month</p>
+          <p className="text-gray-300">Register now and we'll get back to you with details</p>
         </div>
 
         {/* Form */}
@@ -263,7 +262,7 @@ export const SignupPage = (): JSX.Element => {
               className={`w-full px-4 py-3 bg-[#4c454533] border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#13ef96] transition-all ${
                 errors.uniqueId ? 'border-red-500' : 'border-[#ffffff8a]'
               }`}
-              placeholder="Enter your unique ID"
+              placeholder="Choose a unique ID"
             />
             {errors.uniqueId && <p className="text-red-400 text-sm mt-1">{errors.uniqueId}</p>}
           </div>
@@ -301,17 +300,14 @@ export const SignupPage = (): JSX.Element => {
                 Creating Account...
               </div>
             ) : (
-              'Create My Affiliate Account'
+              'Register for Affiliate Program'
             )}
           </motion.button>
 
-          {/* Login Link */}
+          {/* Info Text */}
           <div className="text-center mt-6">
-            <p className="text-gray-400">
-              Already have an account?{' '}
-              <a href="/login" className="text-[#13ef96] hover:underline font-medium">
-                Sign In
-              </a>
+            <p className="text-gray-400 text-sm">
+              By registering, you agree to our terms and conditions
             </p>
           </div>
         </motion.form>

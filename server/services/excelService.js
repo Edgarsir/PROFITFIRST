@@ -29,11 +29,10 @@ class ExcelService {
         'Timestamp', 
         'Full Name', 
         'Email', 
-        'Unique ID', 
-        'Password Hash', 
-        'Status',
+        'Unique ID',
+        'Password',
         'Registration IP',
-        'Last Login'
+        'Status'
       ]);
       
       // Style the header row
@@ -58,10 +57,9 @@ class ExcelService {
         { width: 25 }, // Full Name
         { width: 30 }, // Email
         { width: 20 }, // Unique ID
-        { width: 20 }, // Password Hash
-        { width: 12 }, // Status
+        { width: 20 }, // Password
         { width: 15 }, // Registration IP
-        { width: 20 }  // Last Login
+        { width: 12 }  // Status
       ];
 
       await wb.xlsx.writeFile(EXCEL_PATH);
@@ -70,7 +68,7 @@ class ExcelService {
   }
 
   // Append a new user signup to the workbook
-  async addUser({ name, email, uniqueId, passwordHash, ip = 'Unknown' }) {
+  async addUser({ name, email, uniqueId, password, ip = 'Unknown' }) {
     try {
       await this.ensureWorkbook();
       
@@ -88,10 +86,9 @@ class ExcelService {
         name,
         email,
         uniqueId,
-        passwordHash,
-        'Active',
+        password,
         ip,
-        'Never'
+        'Active'
       ]);
 
       // Style the new row
@@ -123,31 +120,7 @@ class ExcelService {
     }
   }
 
-  // Update user's last login time
-  async updateLastLogin(email) {
-    try {
-      const wb = new ExcelJS.Workbook();
-      await wb.xlsx.readFile(EXCEL_PATH);
-      
-      const ws = wb.getWorksheet('User Signups');
-      if (!ws) return;
 
-      // Find user row by email
-      ws.eachRow((row, rowNumber) => {
-        if (rowNumber > 1) { // Skip header row
-          const rowEmail = row.getCell(3).value; // Email is in column 3
-          if (rowEmail === email) {
-            row.getCell(8).value = new Date().toISOString(); // Last Login is column 8
-          }
-        }
-      });
-
-      await wb.xlsx.writeFile(EXCEL_PATH);
-      console.log(`✅ Updated last login for ${email}`);
-    } catch (error) {
-      console.error('❌ Error updating last login:', error);
-    }
-  }
 
   // Check if user exists by email
   async userExists(email) {
@@ -178,6 +151,8 @@ class ExcelService {
       return false;
     }
   }
+
+
 
   // Check if unique ID exists
   async uniqueIdExists(uniqueId) {
@@ -232,10 +207,9 @@ class ExcelService {
               name: row.getCell(2).value,
               email: row.getCell(3).value,
               uniqueId: row.getCell(4).value,
-              passwordHash: row.getCell(5).value,
-              status: row.getCell(6).value,
-              registrationIP: row.getCell(7).value,
-              lastLogin: row.getCell(8).value
+              password: row.getCell(5).value,
+              registrationIP: row.getCell(6).value,
+              status: row.getCell(7).value
             };
           }
         }
@@ -253,7 +227,7 @@ class ExcelService {
     return EXCEL_PATH;
   }
 
-  // Get all users with name, number, email, password
+  // Get all users with name, email, uniqueId, password
   async getAllUsersBasicInfo() {
     try {
       if (!fs.existsSync(EXCEL_PATH)) {
@@ -270,10 +244,13 @@ class ExcelService {
       ws.eachRow((row, rowNumber) => {
         if (rowNumber > 1) { // Skip header row
           const user = {
+            timestamp: row.getCell(1).value,
             name: row.getCell(2).value,
             email: row.getCell(3).value,
             uniqueId: row.getCell(4).value,
-            password: row.getCell(5).value // This is the password hash
+            password: row.getCell(5).value,
+            ip: row.getCell(6).value,
+            status: row.getCell(7).value
           };
           users.push(user);
         }
@@ -305,7 +282,7 @@ class ExcelService {
       ws.eachRow((row, rowNumber) => {
         if (rowNumber > 1) { // Skip header row
           totalUsers++;
-          const status = row.getCell(6).value;
+          const status = row.getCell(7).value; // Status is now in column 7
           if (status === 'Active') {
             activeUsers++;
           }
