@@ -27,7 +27,7 @@ export const ShareCard = (): JSX.Element => {
         <div className="absolute top-[158px] 3xl:top-[190px] 4xl:top-[248px] 5xl:top-[330px] left-[20px] 3xl:left-[27px] 4xl:left-[35px] 5xl:left-[47px] text-center [font-family:'Poppins',Helvetica] font-bold text-black text-sm 3xl:text-[17px] 4xl:text-[22px] 5xl:text-[29px] tracking-[0] leading-[18px] 3xl:leading-[22px] 4xl:leading-[29px] 5xl:leading-[38px] whitespace-nowrap">
           Social Post
         </div>
-        <div className="absolute top-px left-0 w-[135px] 3xl:w-[160px] 4xl:w-[210px] 5xl:w-[278px] h-[338px] 3xl:h-[395px] 4xl:h-[517px] 5xl:h-[687px] flex flex-col bg-[#d9d9d9]">
+        <div className="absolute top-px left-0 w-[135px] 3xl:w-[160px] 4xl:w-[210px] 5xl:w-[278px] h-[338px] 3xl:h-[395px] 4xl:h-[517px] 5xl:h-[687px] flex flex-col bg-[#d9d9d9] rounded-l-[12px] 3xl:rounded-l-[14px] 4xl:rounded-l-[18px] 5xl:rounded-l-[24px]">
           <div className="ml-3 3xl:ml-4 4xl:ml-5 5xl:ml-7 w-[80px] 3xl:w-[95px] 4xl:w-[124px] 5xl:w-[165px] h-[18px] 3xl:h-[22px] 4xl:h-[29px] 5xl:h-[38px] mt-[55px] 3xl:mt-[65px] 4xl:mt-[85px] 5xl:mt-[113px] [font-family:'Poppins',Helvetica] font-bold text-black text-sm 3xl:text-[17px] 4xl:text-[22px] 5xl:text-[29px] tracking-[0] leading-[18px] 3xl:leading-[22px] 4xl:leading-[29px] 5xl:leading-[38px] whitespace-nowrap">
             Social Post
           </div>

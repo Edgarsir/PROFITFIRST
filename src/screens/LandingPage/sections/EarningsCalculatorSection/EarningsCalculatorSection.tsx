@@ -64,7 +64,7 @@ export const EarningsCalculatorSection = (): JSX.Element => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 3xl:gap-16 4xl:gap-20 5xl:gap-28">
           {/* Left Panel - Inputs */}
-          <div className="bg-[#2a2a2a] rounded-[16px] 3xl:rounded-[20px] 4xl:rounded-[26px] 5xl:rounded-[35px] p-5 lg:p-6 3xl:p-12 4xl:p-16 5xl:p-20 3xl:min-h-[900px] 4xl:min-h-[1200px] 5xl:min-h-[1600px]">
+          <div className="bg-[#2a2a2a] rounded-[12px] 3xl:rounded-[14px] 4xl:rounded-[18px] 5xl:rounded-[24px] p-5 lg:p-6 3xl:p-12 4xl:p-16 5xl:p-20 3xl:min-h-[900px] 4xl:min-h-[1200px] 5xl:min-h-[1600px]">
             <h3 className="[font-family:'Inter',Helvetica] font-semibold text-white text-xl lg:text-[20px] 3xl:text-[32px] 4xl:text-[42px] 5xl:text-[56px] mb-5 lg:mb-6 3xl:mb-12 4xl:mb-16 5xl:mb-20">
               Inputs
             </h3>
@@ -145,7 +145,7 @@ export const EarningsCalculatorSection = (): JSX.Element => {
             </h3>
 
             {/* Monthly Recurring Income */}
-            <div className="bg-[#2a2a2a] rounded-[14px] 3xl:rounded-[18px] p-3 lg:p-4 3xl:p-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-0">
+            <div className="bg-[#2a2a2a] rounded-[12px] 3xl:rounded-[14px] p-3 lg:p-4 3xl:p-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-0">
               <div>
                 <div className="text-[#ccc] text-sm lg:text-[14px] 3xl:text-[16px] mb-1 3xl:mb-2">Affiliate - Monthly recurring income</div>
                 <div className="text-white text-xl lg:text-[24px] 3xl:text-[32px] font-bold">
@@ -158,7 +158,7 @@ export const EarningsCalculatorSection = (): JSX.Element => {
             </div>
 
             {/* Annual Recurring */}
-            <div className="bg-[#2a2a2a] rounded-[14px] 3xl:rounded-[18px] p-3 lg:p-4 3xl:p-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-0">
+            <div className="bg-[#2a2a2a] rounded-[12px] 3xl:rounded-[14px] p-3 lg:p-4 3xl:p-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-0">
               <div>
                 <div className="text-[#ccc] text-sm lg:text-[14px] 3xl:text-[16px] mb-1 3xl:mb-2">Affiliate - Annual recurring 12x</div>
                 <div className="text-white text-xl lg:text-[24px] 3xl:text-[32px] font-bold">
@@ -171,7 +171,7 @@ export const EarningsCalculatorSection = (): JSX.Element => {
             </div>
 
             {/* Projected Lifetime Earning */}
-            <div className="bg-[#2a2a2a] rounded-[14px] 3xl:rounded-[18px] p-3 lg:p-4 3xl:p-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-0 mb-5 lg:mb-6 3xl:mb-8">
+            <div className="bg-[#2a2a2a] rounded-[12px] 3xl:rounded-[14px] p-3 lg:p-4 3xl:p-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-0 mb-5 lg:mb-6 3xl:mb-8">
               <div>
                 <div className="text-[#ccc] text-sm lg:text-[14px] 3xl:text-[16px] mb-1 3xl:mb-2">Projected Affiliate lifetime earning</div>
                 <div className="text-white text-xl lg:text-[24px] 3xl:text-[32px] font-bold">
@@ -186,7 +186,7 @@ export const EarningsCalculatorSection = (): JSX.Element => {
             {/* Become Our Affiliate Button */}
             <a
               href="/signup"
-              className="inline-flex items-center justify-center gap-2 3xl:gap-3 bg-[#13ef96] text-black px-5 lg:px-6 3xl:px-7 py-2.5 lg:py-3 3xl:py-4 rounded-[14px] 3xl:rounded-[18px] [font-family:'Inter',Helvetica] font-bold text-base lg:text-[16px] 3xl:text-[18px] hover:bg-[#0fd085] transition-all duration-300 hover:scale-105 w-full sm:w-auto"
+              className="inline-flex items-center justify-center gap-2 3xl:gap-3 bg-[#13ef96] text-black px-5 lg:px-6 3xl:px-7 py-2.5 lg:py-3 3xl:py-4 rounded-[12px] 3xl:rounded-[14px] [font-family:'Inter',Helvetica] font-bold text-base lg:text-[16px] 3xl:text-[18px] hover:bg-[#0fd085] transition-all duration-300 hover:scale-105 w-full sm:w-auto"
             >
               <img
                 className="w-5 h-5 lg:w-6 lg:h-6 3xl:w-7 3xl:h-7"

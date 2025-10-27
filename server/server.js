@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const excelService = require('./services/excelService');
 
 // Load environment variables
 dotenv.config();
@@ -15,15 +14,7 @@ app.use(cors({
   credentials: true
 }));
 
-// Initialize Excel service
-(async () => {
-  try {
-    await excelService.ensureWorkbook();
-    console.log('✅ Excel service initialized');
-  } catch (error) {
-    console.error('❌ Excel service initialization error:', error);
-  }
-})();
+console.log('📊 Using Google Sheets for data storage');
 
 // Import routes
 const simpleSignupRoutes = require('./routes/simpleSignup');

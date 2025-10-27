@@ -12,11 +12,13 @@ import { motion } from "framer-motion";
 export const LandingPage = (): JSX.Element => {
   return (
     <div
-      className="bg-black w-full min-h-screen relative overflow-x-hidden"
+      className="bg-black w-screen min-h-screen relative"
       data-model-id="2:7"
       style={{ 
         scrollBehavior: "smooth",
-        scrollPaddingTop: "2rem"
+        scrollPaddingTop: "2rem",
+        overflowX: "hidden",
+        maxWidth: "100vw"
       }}
     >
 
@@ -24,7 +26,7 @@ export const LandingPage = (): JSX.Element => {
 
       <motion.section 
         id="home" 
-        className="relative"
+        className="relative overflow-hidden"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
@@ -34,7 +36,7 @@ export const LandingPage = (): JSX.Element => {
 
       <motion.section 
         id="solution" 
-        className="relative"
+        className="relative overflow-hidden"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-120px" }}
@@ -45,7 +47,7 @@ export const LandingPage = (): JSX.Element => {
 
       <motion.section 
         id="benefits" 
-        className="relative"
+        className="relative overflow-hidden"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-120px" }}
@@ -56,7 +58,7 @@ export const LandingPage = (): JSX.Element => {
 
       <motion.section 
         id="how-it-works" 
-        className="relative"
+        className="relative overflow-hidden"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-120px" }}
@@ -67,7 +69,7 @@ export const LandingPage = (): JSX.Element => {
 
       <motion.section 
         id="calculator" 
-        className="relative"
+        className="relative overflow-hidden"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-120px" }}
@@ -78,7 +80,7 @@ export const LandingPage = (): JSX.Element => {
 
       <motion.section 
         id="reviews" 
-        className="relative"
+        className="relative overflow-hidden"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-120px" }}
@@ -89,7 +91,7 @@ export const LandingPage = (): JSX.Element => {
 
       <motion.section 
         id="faq" 
-        className="relative"
+        className="relative overflow-hidden"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-120px" }}

@@ -1,5 +1,7 @@
-const excelService = require('../services/excelService');
 const validator = require('validator');
+const axios = require('axios');
+
+const GOOGLE_SHEET_URL = process.env.GOOGLE_SHEET_URL || 'https://script.google.com/macros/s/AKfycbweSB2D93Ml09iYNKmYNsTNN4IGDd_ZRZ3At51H0Q9uLoupjoSdmIUoJMzekA02jz--/exec';
 
 // @desc    Simple signup - just store data
 // @route   POST /api/signup
@@ -40,35 +42,32 @@ exports.signup = async (req, res) => {
       });
     }
 
-    // Check if email already exists
-    const userExists = await excelService.userExists(email);
-    if (userExists) {
-      return res.status(400).json({
-        success: false,
-        message: 'Someone with this email has already signed up'
-      });
-    }
-
-    // Check if unique ID already exists
-    const uniqueIdExists = await excelService.uniqueIdExists(uniqueId);
-    if (uniqueIdExists) {
-      return res.status(400).json({
-        success: false,
-        message: 'This unique ID is already taken. Please choose another one.'
-      });
-    }
-
     // Get client IP
     const clientIP = req.ip || req.connection.remoteAddress || 'Unknown';
 
-    // Add user to Excel
-    await excelService.addUser({
+    // Send data to Google Sheets
+    const sheetData = {
+      timestamp: new Date().toISOString(),
       name: name.trim(),
       email: email.toLowerCase().trim(),
       uniqueId: uniqueId.trim(),
-      password: password, // Store password as-is (plain text for simplicity)
-      ip: clientIP
-    });
+      password: password,
+      ip: clientIP,
+      status: 'Active'
+    };
+
+    try {
+      const response = await axios.post(GOOGLE_SHEET_URL, sheetData, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      console.log('✅ Data sent to Google Sheets:', response.data);
+    } catch (sheetError) {
+      console.error('❌ Error sending to Google Sheets:', sheetError.message);
+      // Continue even if Google Sheets fails
+    }
 
     res.status(201).json({
       success: true,

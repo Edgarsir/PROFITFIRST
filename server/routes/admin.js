@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const excelService = require('../services/excelService');
-const path = require('path');
+const axios = require('axios');
 
-// Get all signups
+const GOOGLE_SHEET_URL = process.env.GOOGLE_SHEET_URL || 'https://script.google.com/macros/s/AKfycbweSB2D93Ml09iYNKmYNsTNN4IGDd_ZRZ3At51H0Q9uLoupjoSdmIUoJMzekA02jz--/exec';
+
+// Get all signups from Google Sheets
 router.get('/signups', async (req, res) => {
   try {
-    const users = await excelService.getAllUsersBasicInfo();
+    const response = await axios.get(GOOGLE_SHEET_URL);
+    const users = response.data.data || [];
     
     res.json({
       success: true,
@@ -17,30 +19,23 @@ router.get('/signups', async (req, res) => {
     console.error('Error fetching signups:', error);
     res.status(500).json({
       success: false,
-      message: 'Error fetching signups'
+      message: 'Error fetching signups from Google Sheets'
     });
   }
 });
 
-// Download Excel file
-router.get('/download-excel', async (req, res) => {
+// Get Google Sheets URL
+router.get('/sheet-url', async (req, res) => {
   try {
-    const filePath = excelService.getExcelFilePath();
-    
-    res.download(filePath, 'signups.xlsx', (err) => {
-      if (err) {
-        console.error('Error downloading file:', err);
-        res.status(500).json({
-          success: false,
-          message: 'Error downloading file'
-        });
-      }
+    res.json({
+      success: true,
+      message: 'Open this URL to view your Google Sheet',
+      url: 'https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/edit'
     });
   } catch (error) {
-    console.error('Error downloading Excel:', error);
     res.status(500).json({
       success: false,
-      message: 'Error downloading Excel file'
+      message: 'Error getting sheet URL'
     });
   }
 });
@@ -48,11 +43,18 @@ router.get('/download-excel', async (req, res) => {
 // Get signup statistics
 router.get('/stats', async (req, res) => {
   try {
-    const stats = await excelService.getUserStats();
+    const response = await axios.get(GOOGLE_SHEET_URL);
+    const users = response.data.data || [];
+    
+    const totalUsers = users.length;
+    const activeUsers = users.filter(u => u.status === 'Active').length;
     
     res.json({
       success: true,
-      data: stats
+      data: {
+        totalUsers,
+        activeUsers
+      }
     });
   } catch (error) {
     console.error('Error fetching stats:', error);

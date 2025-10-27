@@ -104,36 +104,27 @@ export const FrequentlyAskedQuestionsSection = (): JSX.Element => {
             initial="hidden"
             animate={isVisible ? "visible" : "hidden"}
           >
-            {faqs.map((faq, index) => {
+            {faqs.map((faq) => {
               return (
                 <motion.div
                   key={faq.id}
-                  className="bg-[#1e1e1e] rounded-[16px] 3xl:rounded-[20px] 4xl:rounded-[26px] 5xl:rounded-[35px] overflow-hidden w-full"
+                  className="bg-[#1e1e1e] rounded-[16px] 3xl:rounded-[20px] 4xl:rounded-[26px] 5xl:rounded-[35px] overflow-hidden w-full "
                   variants={slideFromRight}
-                  whileHover={{ 
-                    backgroundColor: "#252525", 
-                    scale: 1.02, 
-                    boxShadow: "0 10px 30px rgba(19, 239, 150, 0.1)" 
-                  }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 >
-                  <motion.button
-                    className="w-full text-left rounded-[16px] 3xl:rounded-[20px] 4xl:rounded-[26px] 5xl:rounded-[35px]"
+                  <button
+                    className="w-full text-left"
                     onClick={() => toggleFAQ(faq.id)}
                     aria-expanded={faq.isExpanded}
                     aria-controls={`faq-answer-${faq.id}`}
-                    whileHover={{ backgroundColor: "#2a2a2a" }}
-                    whileTap={{ scale: 0.98 }}
                   >
                     <div className="flex items-start justify-between p-5 lg:p-6 3xl:p-8 4xl:p-10 5xl:p-14">
                       <h3 className="[font-family:'Poppins',Helvetica] font-medium text-white text-lg lg:text-[20px] 3xl:text-[24px] 4xl:text-[30px] 5xl:text-[40px] tracking-[0] leading-tight lg:leading-[28px] 3xl:leading-[34px] 4xl:leading-[42px] 5xl:leading-[56px] flex-1 pr-3 lg:pr-4 3xl:pr-5 4xl:pr-6 5xl:pr-8">
                         {faq.question}
                       </h3>
 
-                      <motion.div 
-                        className="w-7 h-7 lg:w-[32px] lg:h-[32px] 4xl:w-[42px] 4xl:h-[42px] 5xl:w-[56px] 5xl:h-[56px] flex-shrink-0 flex items-center justify-center"
-                        animate={{ rotate: faq.isExpanded ? 180 : 0 }}
-                        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                      <div 
+                        className="w-7 h-7 lg:w-[32px] lg:h-[32px] 4xl:w-[42px] 4xl:h-[42px] 5xl:w-[56px] 5xl:h-[56px] flex-shrink-0 flex items-center justify-center transition-transform duration-200 ease-out"
+                        style={{ transform: faq.isExpanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
                       >
                         <svg
                           className="w-5 h-5 lg:w-6 lg:h-6 4xl:w-8 4xl:h-8 5xl:w-10 5xl:h-10"
@@ -150,34 +141,29 @@ export const FrequentlyAskedQuestionsSection = (): JSX.Element => {
                             stroke="white"
                           />
                         </svg>
-                      </motion.div>
+                      </div>
                     </div>
-                  </motion.button>
+                  </button>
 
-                  <AnimatePresence>
+                  <AnimatePresence initial={false}>
                     {faq.isExpanded && faq.answer && (
                       <motion.div
                         id={`faq-answer-${faq.id}`}
-                        className="px-5 lg:px-6 4xl:px-10 5xl:px-14 pb-5 lg:pb-6 4xl:pb-10 5xl:pb-14 overflow-hidden"
+                        className="px-5 lg:px-6 4xl:px-10 5xl:px-14 overflow-hidden"
                         role="region"
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ 
-                          type: "spring", 
-                          stiffness: 300, 
-                          damping: 30,
-                          opacity: { duration: 0.2 }
+                          duration: 0.25,
+                          ease: [0.4, 0, 0.2, 1]
                         }}
                       >
-                        <motion.p 
-                          className="[font-family:'Poppins',Helvetica] font-normal text-white text-sm lg:text-[16px] 4xl:text-[20px] 5xl:text-[27px] tracking-[0] leading-relaxed lg:leading-[22px] 4xl:leading-[28px] 5xl:leading-[38px]"
-                          initial={{ y: -10, opacity: 0 }}
-                          animate={{ y: 0, opacity: 1 }}
-                          transition={{ delay: 0.1 }}
+                        <p 
+                          className="[font-family:'Poppins',Helvetica] font-normal text-white text-sm lg:text-[16px] 4xl:text-[20px] 5xl:text-[27px] tracking-[0] leading-relaxed lg:leading-[22px] 4xl:leading-[28px] 5xl:leading-[38px] pb-5 lg:pb-6 4xl:pb-10 5xl:pb-14"
                         >
                           {faq.answer}
-                        </motion.p>
+                        </p>
                       </motion.div>
                     )}
                   </AnimatePresence>
