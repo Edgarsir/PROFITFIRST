@@ -96,7 +96,10 @@ export const SignupPage = (): JSX.Element => {
     setErrors({});
 
     try {
-      const apiUrl = `${(import.meta as any).env.VITE_API_URL}/signup`;
+      // Use relative path for Vercel deployment, fallback to env variable for local dev
+      const apiUrl = (import.meta as any).env.VITE_API_URL 
+        ? `${(import.meta as any).env.VITE_API_URL}/signup`
+        : '/api/signup';
       console.log('Attempting to call API:', apiUrl);
       
       const response = await fetch(apiUrl, {
